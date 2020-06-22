@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (c) eContriver, LLC.
+# Copyright (c) 2020 eContriver, LLC
 
 set -e
 

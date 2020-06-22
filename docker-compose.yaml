@@ -17,7 +17,7 @@ services:
   deps:
     image: deps:latest
     build: 
-      context: docker
+      context: infra
       dockerfile: Dockerfile
   install:
     image: deps:latest
@@ -57,8 +57,9 @@ services:
       - type: bind
         source: ../hydrogen.keystore
         target: /keystore/
+    working_dir: /hydrogen/
     command:
-      bash -c "/opt/idea-IC-201.7846.76/bin/idea.sh"
+      bash -c "/opt/idea-IC-201.7846.76/bin/idea.sh"
 
 volumes:
   userhome:

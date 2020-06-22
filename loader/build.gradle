@@ -1,0 +1,35 @@
+// Copyright (c) 2020 eContriver LLC
+
+plugins {
+    id 'cpp-application'
+    id 'cpp-unit-test'
+}
+
+application {
+    targetMachines.add(machines.linux.x86_64)
+}
+
+task runDebug() {
+    doFirst {
+        project.exec {
+            FileCollection scriptColn = project.installDebug.outputs.files.filter { it.name.equals("debug") }
+            executable new File(scriptColn[0], "loader")
+        }
+    }
+}
+afterEvaluate {
+    runDebug.inputs.files(installDebug.outputs.files)
+}
+
+task runRelease() {
+    doFirst {
+        project.exec {
+            FileCollection scriptColn = project.installRelease.outputs.files.filter { it.name.equals("release") }
+            executable new File(scriptColn[0], "loader")
+        }
+    }
+}
+afterEvaluate {
+    runRelease.inputs.files(installRelease.outputs.files)
+}
+

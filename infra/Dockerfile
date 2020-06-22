@@ -45,4 +45,7 @@ RUN apt-get update && apt-get install -y \
 
 ####
 # Index
-RUN updatedb
+RUN updatedb
+
+RUN apt-get install -y gradle
+RUN apt-get install -y tree
