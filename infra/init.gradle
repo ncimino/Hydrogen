@@ -1,0 +1,14 @@
+// Copyright (c) 2020 eContriver LLC
+/*
+ * Move this file to the bind mount location specified in the docker-compose.yml
+ * that will be the users home directory, which runs the Android Studio build.
+ * Goes to: ~/.gradle/init.gradle
+ */
+allprojects {
+  //ext {
+  //  RELEASE_STORE_FILE = "/keystore/production.keystore"
+  //  RELEASE_STORE_PASSWORD = "storePassword"
+  //  RELEASE_KEY_ALIAS = "key0"
+  //  RELEASE_KEY_PASSWORD = "keyPassword"
+  //}
+}

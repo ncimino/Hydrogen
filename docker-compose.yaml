@@ -1,0 +1,66 @@
+# Copyright (c) 2020 eContriver LLC
+#
+# Start IDE with:
+#   docker-compose up
+# Build images with:
+#   docker-compose build
+# Run shell commands with:
+#   docker-compose exec ide bash
+# Stop and teardown all associated containers etc.
+#   docker-compose down
+# Run with
+#   docker-compose run idea
+
+version: "3.8"
+
+services:
+  deps:
+    image: deps:latest
+    build: 
+      context: docker
+      dockerfile: Dockerfile
+  install:
+    image: deps:latest
+    depends_on: 
+      - deps
+    volumes:
+      - type: bind
+        source: ./
+        target: /hydrogen/
+        # Trying to mount this as a normal bind mount causes problems with perms
+        # as things like .ssh want 600 perms, docker won't allow it unless this
+        # is mounted like this
+      - type: volume
+        source: userhome
+        target: /root/
+      - type: bind
+        source: ../hydrogen.opt
+        target: /opt/
+    command:
+      bash -c "/hydrogen/infra/install-tools.sh"
+  ide:
+    image: deps:latest
+    depends_on: 
+      - deps
+    environment: 
+      DISPLAY: 192.168.2.110:0 # Current IP address, or leave blank to inherit
+    ports:
+      - '5555:5555'
+    volumes:
+      - type: bind
+        source: ./
+        target: /hydrogen/
+      - type: volume
+        source: userhome
+        target: /root/
+      - type: bind
+        source: ../hydrogen.opt
+        target: /opt/
+      - type: bind
+        source: ../hydrogen.keystore
+        target: /keystore/
+    command:
+      bash -c "/opt/idea-IC-201.7846.76/bin/idea.sh"
+
+volumes:
+  userhome:
