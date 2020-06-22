@@ -44,8 +44,6 @@ services:
       - deps
     environment: 
       DISPLAY: 192.168.2.110:0 # Current IP address, or leave blank to inherit
-    ports:
-      - '5555:5555'
     volumes:
       - type: bind
         source: ./
